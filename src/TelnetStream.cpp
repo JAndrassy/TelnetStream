@@ -1,7 +1,5 @@
 #include "TelnetStream.h"
 
-#define CTRL_C 3
-
 WiFiServer TelnetStreamClass::server(23);
 
 TelnetStreamClass::TelnetStreamClass() {
@@ -23,7 +21,7 @@ boolean TelnetStreamClass::disconnected() {
     client = server.available();
   }
   if (client) {
-    if (client.connected() && client.peek() != CTRL_C)
+    if (client.connected() && client.peek() != 'C')
       return false;
     client.stop();
     client = server.available();
