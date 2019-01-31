@@ -56,7 +56,7 @@ size_t TelnetStreamClass::write(uint8_t val) {
 void TelnetStreamClass::flush() {
   if (disconnected())
     return;
-  return client.flush();
+  client.flush();
 }
 
 TelnetStreamClass TelnetStream;
