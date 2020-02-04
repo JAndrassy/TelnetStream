@@ -15,8 +15,13 @@ void TelnetStreamClass::stop() {
 }
 
 boolean TelnetStreamClass::disconnected() {
+#ifdef ESP32
+  if (!server)
+    return true;
+#else
   if (server.status() == CLOSED)
     return true;
+#endif
   if (!client) {
     client = server.available();
   }

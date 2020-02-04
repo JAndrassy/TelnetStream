@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2017 Juraj Andrássy
+Copyright (C) 2017 Juraj Andrassy
 repository https://github.com/jandrassy
 
     This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,11 @@ repository https://github.com/jandrassy
 #ifndef _TELNETSTREAM_H_
 #define _TELNETSTREAM_H_
 
+#ifdef ESP8266
 #include <ESP8266WiFi.h>
+#else
+#include <WiFi.h>
+#endif
 
 class TelnetStreamClass : public Stream {
 
