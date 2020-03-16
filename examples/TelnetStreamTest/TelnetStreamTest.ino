@@ -20,10 +20,17 @@ void loop()
 {
   ArduinoOTA.handle();
 
-  if (TelnetStream.read() == 'R') {
+  switch (TelnetStream.read()) {
+    case 'R':
     TelnetStream.stop();
     delay(100);
     ESP.reset();
+      break;
+    case 'C':
+      TelnetStream.println("bye bye");
+      TelnetStream.flush();
+      TelnetStream.stop();
+      break;
   }
 
   static unsigned long next = millis();

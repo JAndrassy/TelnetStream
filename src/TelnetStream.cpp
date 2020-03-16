@@ -26,7 +26,7 @@ boolean TelnetStreamClass::disconnected() {
     client = server.available();
   }
   if (client) {
-    if (client.connected() && client.peek() != 'C')
+    if (client.connected())
       return false;
     client.stop();
     client = server.available();
