@@ -1,8 +1,6 @@
 #include "TelnetStream.h"
 
-WiFiServer TelnetStreamClass::server(23);
-
-TelnetStreamClass::TelnetStreamClass() {
+TelnetStreamClass::TelnetStreamClass(uint16_t port) :server(port) {
 }
 
 void TelnetStreamClass::begin() {
@@ -64,4 +62,4 @@ void TelnetStreamClass::flush() {
   client.flush();
 }
 
-TelnetStreamClass TelnetStream;
+TelnetStreamClass TelnetStream(23);

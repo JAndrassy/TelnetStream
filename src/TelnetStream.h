@@ -28,14 +28,14 @@ repository https://github.com/jandrassy
 class TelnetStreamClass : public Stream {
 
 private:
-  static WiFiServer server;
+  WiFiServer server;
   WiFiClient client;
 
  boolean disconnected();
 
 public:
 
-  TelnetStreamClass();
+  TelnetStreamClass(uint16_t port);
 
   void begin();
   void stop();
