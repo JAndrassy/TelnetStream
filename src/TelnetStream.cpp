@@ -1,9 +1,17 @@
+#include <Arduino.h> // to include MCU specific includes for networking library
 #include "TelnetStream.h"
 
 TelnetStreamClass::TelnetStreamClass(uint16_t port) :server(port) {
 }
 
-void TelnetStreamClass::begin() {
+void TelnetStreamClass::begin(int port) {
+  if (port) {
+#if USE_ETHERNET
+    server = EthernetServer(port);
+#else
+    server = WiFiServer(port);
+#endif
+  }
   server.begin();
   client = server.available();
 }
@@ -13,21 +21,29 @@ void TelnetStreamClass::stop() {
 }
 
 boolean TelnetStreamClass::disconnected() {
-#ifdef ESP32
+#if defined(ESP32) || defined(USE_ETHERNET)
   if (!server)
     return true;
 #else
-  if (server.status() == CLOSED)
+  if (server.status() == 0) // 0 is CLOSED
     return true;
 #endif
   if (!client) {
+#if defined(USE_ETHERNET)
+    client = server.accept();
+#else
     client = server.available();
+#endif
   }
   if (client) {
     if (client.connected())
       return false;
     client.stop();
+#if defined(USE_ETHERNET)
+    client = server.accept();
+#else
     client = server.available();
+#endif
   }
   return true;
 }

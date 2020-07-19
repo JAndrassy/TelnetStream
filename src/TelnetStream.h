@@ -19,7 +19,10 @@ repository https://github.com/jandrassy
 #ifndef _TELNETSTREAM_H_
 #define _TELNETSTREAM_H_
 
-#ifdef ESP8266
+#if __has_include(<Ethernet.h>)
+#include <Ethernet.h>
+#define USE_ETHERNET 1
+#elif defined(ESP8266)
 #include <ESP8266WiFi.h>
 #else
 #include <WiFi.h>
@@ -28,8 +31,13 @@ repository https://github.com/jandrassy
 class TelnetStreamClass : public Stream {
 
 private:
+#if USE_ETHERNET
+  EthernetServer server;
+  EthernetClient client;
+#else
   WiFiServer server;
   WiFiClient client;
+#endif
 
  boolean disconnected();
 
@@ -37,7 +45,7 @@ public:
 
   TelnetStreamClass(uint16_t port);
 
-  void begin();
+  void begin(int port = 0);
   void stop();
 
   // Stream implementation
@@ -46,9 +54,9 @@ public:
   int peek();
 
   // Print implementation
-  size_t write(uint8_t val);
+  virtual size_t write(uint8_t val);
   using Print::write; // pull in write(str) and write(buf, size) from Print
-  void flush();
+  virtual void flush();
 
 };
 
