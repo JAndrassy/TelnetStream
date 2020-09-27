@@ -21,23 +21,36 @@ repository https://github.com/jandrassy
 
 #if __has_include(<Ethernet.h>)
 #include <Ethernet.h>
-#define USE_ETHERNET 1
+#define NetClient EthernetClient
+#define NetServer EthernetServer
 #elif defined(ESP8266)
 #include <ESP8266WiFi.h>
+#define NetClient WiFiClient
+#elif __has_include(<WiFi101.h>)
+#include <WiFi101.h>
+#define NetClient WiFiClient
+#define NetServer WiFiServer
 #else
 #include <WiFi.h>
+#define NetClient WiFiClient
+#define NetServer WiFiServer
+#endif
+
+// special server types
+#if defined(ESP32) || defined(ESP8266)
+#include "ArduinoWiFiServer.h"
+#define NetServer ArduinoWiFiServer
+#elif defined(_WIFI_ESP_AT_H_) // from WiFi.h
+#define NetServer WiFiServerPrint
+#elif __has_include(<EthernetENC.h>)
+#define NetServer EthernetServerPrint
 #endif
 
 class TelnetStreamClass : public Stream {
 
 private:
-#if USE_ETHERNET
-  EthernetServer server;
-  EthernetClient client;
-#else
-  WiFiServer server;
-  WiFiClient client;
-#endif
+  NetServer server;
+  NetClient client;
 
  boolean disconnected();
 
@@ -55,6 +68,7 @@ public:
 
   // Print implementation
   virtual size_t write(uint8_t val);
+  virtual size_t write(const uint8_t *buf, size_t size);
   using Print::write; // pull in write(str) and write(buf, size) from Print
   virtual void flush();
 

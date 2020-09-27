@@ -1,10 +1,12 @@
 # TelnetStream
 
-The library creates a TelnetStream object, which can be used the same way as Serial, but the output is sent to a connected telnet client. It enables remote logging or debugging.
+The library creates a TelnetStream object, which can be used the same way as Serial, but the output is sent to all connected telnet clients. It enables remote logging or debugging.
 
 TelnetStream.h can be included not only in the ino file, but in cpp files of the sketch or in libraries to add debug prints for troubleshooting.
 
-TelnetStream works as it is with esp8266 and esp32 WiFi library, with the Ethernet library, with WiFiNINA and with WiFiEspAT library.
+TelnetStream works as it is with esp8266 and esp32 WiFi library, with the Ethernet, EthernetENC and UIPEthernet library, with WiFiNINA, WiFi101 and with WiFiEspAT library.
+
+The library is in Library Manager. You can install it there.
 
 Output of example:
 
