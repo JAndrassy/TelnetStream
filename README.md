@@ -4,7 +4,9 @@ The library creates a TelnetStream object, which can be used the same way as Ser
 
 TelnetStream.h can be included not only in the ino file, but in cpp files of the sketch or in libraries to add debug prints for troubleshooting.
 
-TelnetStream works as it is with esp8266 and esp32 WiFi library, with the Ethernet, EthernetENC and UIPEthernet library, with WiFiNINA, WiFi101 and with WiFiEspAT library.
+Version 1.2.0 introduced TelnetPrint object, a simpler and smaller alternative to TelnetStream. Basically it is only EthernetServer or WiFiServer instanced for use anywhere in your sketch or libraries.
+
+TelnetStream/TelnetPrint works as it is with esp8266 and esp32 WiFi library, with the Ethernet, EthernetENC and UIPEthernet library, with WiFiNINA, WiFi101 and with WiFiEspAT library.
 
 The library is in Library Manager. You can install it there.
 

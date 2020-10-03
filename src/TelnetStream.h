@@ -19,32 +19,7 @@ repository https://github.com/jandrassy
 #ifndef _TELNETSTREAM_H_
 #define _TELNETSTREAM_H_
 
-#if __has_include(<Ethernet.h>)
-#include <Ethernet.h>
-#define NetClient EthernetClient
-#define NetServer EthernetServer
-#elif defined(ESP8266)
-#include <ESP8266WiFi.h>
-#define NetClient WiFiClient
-#elif __has_include(<WiFi101.h>)
-#include <WiFi101.h>
-#define NetClient WiFiClient
-#define NetServer WiFiServer
-#else
-#include <WiFi.h>
-#define NetClient WiFiClient
-#define NetServer WiFiServer
-#endif
-
-// special server types
-#if defined(ESP32) || defined(ESP8266)
-#include "ArduinoWiFiServer.h"
-#define NetServer ArduinoWiFiServer
-#elif defined(_WIFI_ESP_AT_H_) // from WiFi.h
-#define NetServer WiFiServerPrint
-#elif __has_include(<EthernetENC.h>)
-#define NetServer EthernetServerPrint
-#endif
+#include "NetTypes.h"
 
 class TelnetStreamClass : public Stream {
 

@@ -1,4 +1,3 @@
-#include <Arduino.h> // to include MCU specific includes for networking library
 #include "TelnetStream.h"
 
 TelnetStreamClass::TelnetStreamClass(uint16_t port) :server(port) {
@@ -28,7 +27,7 @@ boolean TelnetStreamClass::disconnected() {
   if (!server)
     return true;
 #endif
-    
+
   if (!client || !client.available()) {
     client = server.available(); // try to get next client with data
   }
