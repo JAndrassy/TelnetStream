@@ -65,12 +65,45 @@ public:
 
   virtual size_t write(const uint8_t *buf, size_t size) override {
     acceptClients();
+    if (size == 0)
+      return 0;
     size_t ret = 0;
+#ifdef ESP8266
+    size_t a = size;
+    while (true) {
+      uint8_t zeroACount = 0;
+      for (uint8_t i = 0; i < MAX_MONITORED_CLIENTS; i++) {
+        WiFiClient& client = connectedClients[i];
+        if (client.status() == ESTABLISHED) {
+          size_t afw = client.availableForWrite();
+          if (afw == 0) {
+            zeroACount++;
+          } else if (afw < a) {
+            a = afw;
+          }
+        }
+      }
+      if (zeroACount == MAX_MONITORED_CLIENTS)
+        break;
+      for (uint8_t i = 0; i < MAX_MONITORED_CLIENTS; i++) {
+        WiFiClient& client = connectedClients[i];
+        if (client.status() == ESTABLISHED && client.availableForWrite() > 0) {
+          client.write(buf, a);
+        }
+      }
+      ret += a;
+      if (ret == size)
+        break;
+      buf += a;
+      a = size - ret;
+    }
+#else
     for (uint8_t i = 0; i < MAX_MONITORED_CLIENTS; i++) {
       if (connectedClients[i]) {
         ret = connectedClients[i].write(buf, size);
       }
     }
+#endif
     return ret;
   }
 
