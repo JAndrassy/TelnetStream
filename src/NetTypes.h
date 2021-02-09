@@ -21,17 +21,9 @@ repository https://github.com/jandrassy
 
 #include <Arduino.h> // to include MCU specific includes for networking library
 
-#if __has_include(<EthernetENC.h>)
-#include <EthernetENC.h>
-#define NetClient EthernetClient
-#define NetServer EthernetServerPrint
+// esp doesn't support __has_include but it is defined
 
-#elif __has_include(<Ethernet.h>)
-#include <Ethernet.h>
-#define NetClient EthernetClient
-#define NetServer EthernetServer
-
-#elif defined(ESP8266)
+#if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #include "ArduinoWiFiServer.h"
 #define NetClient WiFiClient
@@ -43,6 +35,18 @@ repository https://github.com/jandrassy
 #define NetClient WiFiClient
 #define NetServer ArduinoWiFiServer
 
+#elif defined __has_include
+
+#if __has_include(<EthernetENC.h>)
+#include <EthernetENC.h>
+#define NetClient EthernetClient
+#define NetServer EthernetServerPrint
+
+#elif __has_include(<Ethernet.h>)
+#include <Ethernet.h>
+#define NetClient EthernetClient
+#define NetServer EthernetServer
+
 #elif __has_include(<WiFi101.h>)
 #include <WiFi101.h>
 #define NetClient WiFiClient
@@ -52,7 +56,14 @@ repository https://github.com/jandrassy
 #include <WiFiEspAT.h>
 #define NetClient WiFiClient
 #define NetServer WiFiServerPrint
+
 #else
+#include <WiFi.h>
+#define NetClient WiFiClient
+#define NetServer WiFiServer
+#endif
+
+#else // not defined __has_include
 #include <WiFi.h>
 #define NetClient WiFiClient
 #define NetServer WiFiServer
