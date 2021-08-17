@@ -110,11 +110,13 @@ public:
   using Print::write;
 
   virtual void flush() {
+#ifndef ESP32 // has wrong client.flush()
     for (uint8_t i = 0; i < MAX_MONITORED_CLIENTS; i++) {
       if (connectedClients[i]) {
         connectedClients[i].flush();
       }
     }
+#endif
   }
 
 #ifdef ESP8266

@@ -49,7 +49,6 @@ void loop() {
       break;
     case 'C':
       TelnetStream.println("bye bye");
-      TelnetStream.flush();
       TelnetStream.stop();
       break;
   }
