@@ -1,3 +1,5 @@
+<a href="https://www.buymeacoffee.com/jurajandraY" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 # TelnetStream
 
 The library creates a TelnetStream object, which can be used the same way as Serial, but the output is sent to all connected telnet clients. It enables remote logging or debugging.
