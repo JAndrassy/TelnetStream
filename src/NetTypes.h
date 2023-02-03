@@ -26,7 +26,7 @@ repository https://github.com/jandrassy
 #if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #if (ARDUINO_ESP8266_MAJOR < 3)
-#include "ArduinoWiFiServer.h"
+#include "ArduinoWiFiServerESP.h"
 #else
 #include <ArduinoWiFiServer.h> // in ESP8266WiFi library
 #endif
@@ -35,7 +35,7 @@ repository https://github.com/jandrassy
 
 #elif defined(ESP32)
 #include <WiFi.h>
-#include "ArduinoWiFiServer.h"
+#include "ArduinoWiFiServerESP.h"
 #define NetClient WiFiClient
 #define NetServer ArduinoWiFiServer
 
