@@ -63,12 +63,14 @@ repository https://github.com/jandrassy
 
 #else
 #include <WiFi.h>
+#include <WiFiServer.h>
 #define NetClient WiFiClient
 #define NetServer WiFiServer
 #endif
 
 #else // not defined __has_include
 #include <WiFi.h>
+#include <WiFiServer.h>
 #define NetClient WiFiClient
 #define NetServer WiFiServer
 #endif

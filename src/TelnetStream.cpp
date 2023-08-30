@@ -23,6 +23,8 @@ boolean TelnetStreamClass::disconnected() {
 #if __has_include(<WiFiNINA.h>) || __has_include(<WiFi101.h>)
   if (server.status() == 0) // 0 is CLOSED
     return true;
+#elif __has_include(<WiFiS3.h>)
+  // no bool operator, no status() function
 #else
   if (!server)
     return true;
