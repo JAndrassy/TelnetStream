@@ -61,6 +61,12 @@ repository https://github.com/jandrassy
 #define NetClient WiFiClient
 #define NetServer WiFiServerPrint
 
+#elif defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED)
+#include <WiFi.h>
+#include <ArduinoWiFiServerESP.h>
+#define NetClient WiFiClient
+#define NetServer ArduinoWiFiServer
+
 #else
 #include <WiFi.h>
 #include <WiFiServer.h>

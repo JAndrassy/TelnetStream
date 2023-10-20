@@ -25,13 +25,20 @@
 #include <ESP8266WiFi.h>
 #else
 #include <WiFi.h>
+#if defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED)
+#include "lwip/tcpbase.h"
+#endif
 #endif
 
 #ifndef MAX_MONITORED_CLIENTS
 #define MAX_MONITORED_CLIENTS 5
 #endif
 
-class ArduinoWiFiServer : public WiFiServer {
+class ArduinoWiFiServer : public WiFiServer
+#if defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED)
+, public Print
+#endif
+{
 public:
 
   ArduinoWiFiServer(const IPAddress& addr, uint16_t port) : WiFiServer(addr, port) {}
@@ -119,7 +126,7 @@ public:
 #endif
   }
 
-#ifdef ESP8266
+#if defined(ESP8266) || (defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED))
   operator bool() {return (status() == LISTEN);}
 #endif
 
