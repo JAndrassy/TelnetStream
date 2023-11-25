@@ -20,14 +20,14 @@ void TelnetStreamClass::stop() {
 }
 
 boolean TelnetStreamClass::disconnected() {
-#if __has_include(<WiFiNINA.h>) || __has_include(<WiFi101.h>)
+#if __has_include(<WiFiNINA.h>) || (defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED))
   if (server.status() == 0) // 0 is CLOSED
     return true;
-#elif __has_include(<WiFiS3.h>)
-  // no bool operator, no status() function
-#else
+#elif (__has_include(<Ethernet.h>) && !defined(ARDUINO_ARCH_MBED)) || __has_include(<EthernetENC.h>) || __has_include(<WiFiEspAT.h>) || defined(ESP32)
   if (!server)
     return true;
+#else
+  // no bool operator, no status() function
 #endif
 
   if (!client || !client.available()) {
