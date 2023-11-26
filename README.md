@@ -6,7 +6,16 @@ TelnetStream.h can be included not only in the ino file, but in cpp files of the
 
 Version 1.2.0 introduced TelnetPrint object, a simpler and smaller alternative to TelnetStream. Basically it is only EthernetServer or WiFiServer instanced for use anywhere in your sketch or libraries.
 
-TelnetStream/TelnetPrint works as it is with esp8266 and esp32 WiFi library, with the Ethernet and EthernetENC, with WiFiNINA, WiFi101, WiFiS3 and WiFiEspAT library. The RP2040 Pico Core networking libraries are supported as well. 
+TelnetStream/TelnetPrint works as it is with:
+
+* esp8266 and esp32 WiFi library (including the wired network interfaces)
+* Ethernet and EthernetENC library
+* WiFiNINA, WiFi101 and WiFiEspAT library 
+* Renesas Core WiFiS3 and WiFiC3 libraries
+* WiFi library of the RP2040 Pico Core (including the wired network interfaces)
+* WiFi and PortentaEthernet library of the Mbed Core 
+
+Version 1.3.0 has NetApiHelpers library as dependency. NetApiHelpers library provides Arduino Server for networking libraries without print-to-all-clients functionality in their Server implementation: ESP8266WiFi, ESP32 WiFi, RP2040 Core and Mbed Core.
 
 The library is in Library Manager. You can install it there.
 

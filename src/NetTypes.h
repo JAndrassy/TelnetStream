@@ -26,16 +26,16 @@ repository https://github.com/jandrassy
 #if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #if (ARDUINO_ESP8266_MAJOR < 3)
-#include "ArduinoWiFiServerESP.h"
-#else
-#include <ArduinoWiFiServer.h> // in ESP8266WiFi library
+#include <NetApiHelpers.h>
 #endif
+#include <ArduinoWiFiServer.h>
 #define NetClient WiFiClient
 #define NetServer ArduinoWiFiServer
 
 #elif defined(ESP32)
 #include <WiFi.h>
-#include "ArduinoWiFiServerESP.h"
+#include <NetApiHelpers.h>
+#include <ArduinoWiFiServer.h>
 #define NetClient WiFiClient
 #define NetServer ArduinoWiFiServer
 
@@ -45,6 +45,13 @@ repository https://github.com/jandrassy
 #include <EthernetENC.h>
 #define NetClient EthernetClient
 #define NetServer EthernetServerPrint
+
+#elif __has_include(<PortentaEthernet.h>)
+#include <PortentaEthernet.h>
+#include <NetApiHelpers.h>
+#include <ArduinoEthernetServer.h>
+#define NetClient EthernetClient
+#define NetServer ArduinoEthernetServer
 
 #elif __has_include(<Ethernet.h>)
 #include <Ethernet.h>
@@ -56,14 +63,20 @@ repository https://github.com/jandrassy
 #define NetClient WiFiClient
 #define NetServer WiFiServer
 
+#elif __has_include(<WiFiC3.h>)
+#include <WiFiC3.h>
+#define NetClient WiFiClient
+#define NetServer WiFiServer
+
 #elif __has_include(<WiFiEspAT.h>)
 #include <WiFiEspAT.h>
 #define NetClient WiFiClient
 #define NetServer WiFiServerPrint
 
-#elif defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED)
+#elif (defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED)) || (defined(ARDUINO_ARCH_MBED) && !defined(ARDUINO_ARCH_MBED_NANO))
 #include <WiFi.h>
-#include <ArduinoWiFiServerESP.h>
+#include <NetApiHelpers.h>
+#include <ArduinoWiFiServer.h>
 #define NetClient WiFiClient
 #define NetServer ArduinoWiFiServer
 
