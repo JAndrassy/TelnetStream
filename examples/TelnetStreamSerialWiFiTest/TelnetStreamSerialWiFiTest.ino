@@ -71,4 +71,5 @@ void log() {
   TelnetStream.print(timeStr);
   TelnetStream.print(" A0: ");
   TelnetStream.println(analogRead(A0));
+  TelnetStream.flush();
 }
