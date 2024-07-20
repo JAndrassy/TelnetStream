@@ -53,6 +53,17 @@ repository https://github.com/jandrassy
 #define NetClient EthernetClient
 #define NetServer ArduinoEthernetServer
 
+#elif __has_include(<WiFiEspAT.h>)
+#include <WiFiEspAT.h>
+#define NetClient WiFiClient
+#if WIFIESPAT_LIB_VERSION < 2
+#define NetServer WiFiServerPrint
+#else
+#include <NetApiHelpers.h>
+#include <ArduinoWiFiServer.h>
+#define NetServer ArduinoWiFiServer
+#endif
+
 #elif __has_include(<Ethernet.h>)
 #include <Ethernet.h>
 #define NetClient EthernetClient
@@ -67,11 +78,6 @@ repository https://github.com/jandrassy
 #include <WiFiC3.h>
 #define NetClient WiFiClient
 #define NetServer WiFiServer
-
-#elif __has_include(<WiFiEspAT.h>)
-#include <WiFiEspAT.h>
-#define NetClient WiFiClient
-#define NetServer WiFiServerPrint
 
 #elif (defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED)) || (defined(ARDUINO_ARCH_MBED) && !defined(ARDUINO_ARCH_MBED_NANO))
 #include <WiFi.h>
