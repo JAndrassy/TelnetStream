@@ -2,8 +2,6 @@
 #include <TimeLib.h>
 #include <TelnetStream.h>
 
-const int8_t TIME_ZONE = 2; // UTC + 2
-
 void setup() {
   Serial.begin(115200);
 
@@ -25,7 +23,7 @@ void setup() {
   }
   Serial.println();
 
-  WiFi.sntp(TIME_ZONE, "us.pool.ntp.org");
+  WiFi.sntp("us.pool.ntp.org");
 
   Serial.println("Waiting for SNTP");
 //  while (!WiFi.getTime()) {
