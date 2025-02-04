@@ -15,6 +15,10 @@ void TelnetStreamClass::begin(int port) {
   client = server.available();
 }
 
+void TelnetStreamClass::end() {
+  server.end();
+}
+
 void TelnetStreamClass::stop() {
   client.stop();
 }
