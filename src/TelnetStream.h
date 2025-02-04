@@ -34,6 +34,7 @@ public:
   TelnetStreamClass(uint16_t port);
 
   void begin(int port = 0);
+  void end();
   void stop();
 
   // Stream implementation
