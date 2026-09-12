@@ -64,6 +64,15 @@ repository https://github.com/jandrassy
 #define NetServer ArduinoWiFiServer
 #endif
 
+#elif __has_include(<Ethernet_Generic.h>)
+// Ethernet_Generic.h is Ethernet_Generic.hpp plus the _Impl headers, which define
+// the objects and so belong in one translation unit. A library includes the .hpp.
+#include <Ethernet_Generic.hpp>
+#include <EthernetClient.h>
+#include <EthernetServer.h>
+#define NetClient EthernetClient
+#define NetServer EthernetServer
+
 #elif __has_include(<Ethernet.h>)
 #include <Ethernet.h>
 #define NetClient EthernetClient
